@@ -10,7 +10,9 @@ var answerChoices = document.querySelector('.answer-choices');
 var answerButton = document.querySelector('.answer');
 
 //Number of seconds to complete quiz
-var seconds = 566;
+var seconds = 60;
+//Number question in index
+var questionIndex = 0;
 
 //Array of objects representing questions and their answers
 var questions = [
@@ -31,47 +33,39 @@ var questions = [
 	}
 ];
 
-//Array of questions that haven't been asked, questions removed each time they are asked
-var currentQuestions = questions;
-
 //Gets new question
 function getQuestion() {
-	//Gets a random index from the currentQuestions array
-	var questionIndex = Math.floor(Math.random() * currentQuestions.length);
+	//Defines and displays question based on index
 
-	//Displays random question from currentQuestions array
-	var questionObject = currentQuestions[questionIndex];
+	var questionObject = questions[questionIndex];
 	questionText.textContent = questionObject.question;
 
+	//Gets answers and answer choices from questionObject to compare
 	var answers = questionObject.possibleAnswers;
-	var correctAnswer = questionObject.answer;
-	function spliceQuestion() {
-		if ((currentQuestions.length = 0)) {
-			return;
-		} else {
-			currentQuestions.splice(questionIndex, 1);
-		}
-	}
-	function checkQuestion() {
-		if (currentQuestions.length > 0) {
-			if (event.target.textContent === correctAnswer) {
-				correctText.textContent = 'Correct!';
-				spliceQuestion();
-				getQuestion();
-			} else if (event.target.textContent !== correctAnswer) {
-				correctText.textContent = 'Incorrect!';
-				spliceQuestion();
-				getQuestion();
-			}
-		} else {
-			endGame();
-		}
-	}
+
 	for (i = 0; i < answers.length; i++) {
 		answerChoices.children[i].textContent = answers[i];
 		answerChoices.children[i].addEventListener('click', checkQuestion);
 	}
-	//Removes question that has been displayed from currentQuestions
+}
+
+function checkQuestion() {
+	if (questionIndex < questions.length - 1) {
+		if (event.target.textContent === questions[questionIndex].answer) {
+			correctText.textContent = 'Correct!';
+			console.log('correct');
+			questionIndex++;
+			getQuestion();
+		} else if (event.target.textContent !== questions[questionIndex].answer) {
+			correctText.textContent = 'Incorrect!';
+			console.log('incorrect');
+			seconds -= 10;
+			questionIndex++;
+			getQuestion();
+		}
+	} else if (questionIndex === questions.length - 1) {
+		endGame();
+	}
 }
 
 //Starts game by starting timer and showing first question
