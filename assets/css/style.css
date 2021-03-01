@@ -1,9 +1,5 @@
-.question,
-.answer-choices,
-.correct-status,
-.initials,
-.final-score,
-.initials-submit {
+.end-area,
+.quiz-area {
 	display: none;
 }
 
@@ -19,17 +15,11 @@ body {
 	font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+/* HEADER */
 header {
 	display: inline-block;
 	width: 100%;
 	background-color: #c0c0c0;
-}
-
-.game-area {
-	display: block;
-	margin-left: 30%;
-	margin-right: 30%;
-	text-align: center;
 }
 
 .high-scores {
@@ -48,3 +38,31 @@ header {
 	display: block;
 	float: right;
 }
+
+/*GAME AREA*/
+.game-area {
+	display: block;
+	margin-left: 30%;
+	margin-right: 30%;
+	margin-top: 50px;
+	text-align: center;
+}
+
+/*BEFORE QUIZ*/
+.quiz-description {
+	margin-left: 20%;
+	margin-right: 20%;
+}
+
+/*DURING QUIZ*/
+.answer-area {
+	font-size: 20px;
+	float: left;
+}
+
+.correct-status {
+	font-size: 20px;
+	float: right;
+}
+
+/*QUIZ OVER*/

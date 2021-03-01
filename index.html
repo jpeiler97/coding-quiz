@@ -15,21 +15,40 @@
     </header>
 
     <div class= "game-area">
+
         <!--Visible on Start-->
-        <h1 class= "game-title">Coding Quiz</h1>
-        <h1 class= "quiz-description"></h1>
-        <button class= "start-button">START</button>
+        <div class = "start-area">
+            <h1 class= "game-title">Coding Quiz</h1>
+            <h3 class= "quiz-description">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultrices, odio consequat auctor scelerisque, 
+                metus velit posuere nisl, vel sollicitudin quam sapien in diam. 
+                </h3>
+            <button class= "start-button">START</button>
+        </div>
 
         <!-- Visible during game-->
-        <h1 class= "question">Question</h1>
-        <div class = "answer-choices"></div>
-        <h1 class= "correct-status"></h1>
+        <div class= "quiz-area">
+            <h1 class= "question">??? ??????????? ??? ?? ????????? ?? ????</h1>
+            <div class = "answer-area">
+                <ol class= "answer-choices">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ol>
+            </div> 
+        
+            <h1 class= "correct-status">Correct!</h1>
+        </div>
 
         <!-- Visible after game-->
-        <form class= "initials"> </form>
-        <h2 class= "final-score"></h2>
-        <button class= "initials-submit">Submit</button>
+        <div class= "end-area">
+            <h1 class= "end-text">Quiz Over</h1>
+            <form class= "initial-form">Enter your initials <br><input class= "initials" type= "text"></input></form>
+            <h2 class= "final-score"></h2>
+            <button class= "initials-submit">Submit</button>
+        </div>
     </div>
-
+    <script src= "./assets/js/script.js"></script>
 </body>
 </html>
