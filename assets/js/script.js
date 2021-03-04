@@ -10,13 +10,17 @@ var correctText = document.querySelector('.correct-status');
 var answerChoices = document.querySelector('.answer-choices');
 var answerButton = document.querySelector('.answer');
 var scoreText = document.querySelector('.score-text');
+var submitButton = document.querySelector('.initials-submit');
+var initialsForm = document.querySelector('.initials');
 
 //Number of seconds to complete quiz
-var seconds = 15;
+var seconds = 100;
 //Number question in index
 var questionIndex = 0;
 //Score variable
 var score = 0;
+
+var highScores = [];
 
 //Array of objects representing questions and their answers
 var questions = [
@@ -103,8 +107,6 @@ function endGame() {
 	quizArea.style.display = 'none';
 	endArea.style.display = 'block';
 	scoreText.textContent = score;
-	//Resets questionIndex for replay
-	questionIndex = 0;
 }
 
 //Function to count down timer one second at a time
@@ -116,12 +118,35 @@ function setTime() {
 		//Ends game when timer reaches 0
 		if (seconds <= 0) {
 			clearInterval(timeInterval);
-			endGame();
 			seconds = 0;
 			timeText.textContent = seconds;
 		}
 	}, 1000);
 }
 
+function resetGame() {
+	endArea.style.display = 'none';
+	startArea.style.display = 'block';
+	//Resets questionIndex and score for replay
+	questionIndex = 0;
+	score = 0;
+	seconds = 0;
+}
+
+function submitScore() {
+	var highScore = {
+		scoreValue: 0,
+		initials: ''
+	};
+
+	highScore.scoreValue = score;
+	highScore.initials = initialsForm.value.toUpperCase();
+
+	highScores.push(highScore);
+	localStorage.setItem('High Scores', JSON.stringify(highScores));
+	resetGame();
+}
+
 //Starts game when user clicks start button
 startButton.addEventListener('click', startGame);
+submitButton.addEventListener('click', submitScore);
