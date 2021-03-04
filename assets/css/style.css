@@ -1,5 +1,6 @@
 .end-area,
-.quiz-area {
+.quiz-area,
+.highscore-area {
 	display: none;
 }
 

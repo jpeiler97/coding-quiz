@@ -12,15 +12,17 @@ var answerButton = document.querySelector('.answer');
 var scoreText = document.querySelector('.score-text');
 var submitButton = document.querySelector('.initials-submit');
 var initialsForm = document.querySelector('.initials');
+var highscoreArea = document.querySelector('.highscore-area');
+var returnButton = document.querySelector('.return-button');
 
-//Number of seconds to complete quiz
+//Number of seconds to complete quizw
 var seconds = 100;
 //Number question in index
 var questionIndex = 0;
 //Score variable
 var score = 0;
 
-var highScores = [];
+var gameOver = false;
 
 //Array of objects representing questions and their answers
 var questions = [
@@ -92,6 +94,7 @@ function checkQuestion() {
 function startGame() {
 	//Hides start section, displays quiz section
 	startArea.style.display = 'none';
+	highScoreButton.style.display = 'none';
 	quizArea.style.display = 'block';
 
 	//Prevents first second on timer from not appearing on start
@@ -107,6 +110,9 @@ function endGame() {
 	quizArea.style.display = 'none';
 	endArea.style.display = 'block';
 	scoreText.textContent = score;
+	//Sets boolean gameOver to true. setTime() will check if gameOver is true so that the
+	//clock will reset if the game ends before the timer does
+	gameOver = true;
 }
 
 //Function to count down timer one second at a time
@@ -116,7 +122,7 @@ function setTime() {
 		timeText.textContent = seconds;
 
 		//Ends game when timer reaches 0
-		if (seconds <= 0) {
+		if (seconds <= 0 || gameOver) {
 			clearInterval(timeInterval);
 			seconds = 0;
 			timeText.textContent = seconds;
@@ -124,29 +130,65 @@ function setTime() {
 	}, 1000);
 }
 
+//Function to bring user back to starting screen
 function resetGame() {
 	endArea.style.display = 'none';
+	highScoreButton.style.display = 'block';
 	startArea.style.display = 'block';
+	//Resets gameOver to false so the timer can start again
+	gameOver = false;
 	//Resets questionIndex and score for replay
 	questionIndex = 0;
 	score = 0;
-	seconds = 0;
+	seconds = 100;
 }
 
-function submitScore() {
+function addScore() {
+	//Makes an empty object to store the high score and initials
 	var highScore = {
 		scoreValue: 0,
 		initials: ''
 	};
 
+	//Sets values in highScore object based on user input and their score
 	highScore.scoreValue = score;
 	highScore.initials = initialsForm.value.toUpperCase();
 
+	//Creates an empty array if there is no high scores in local storage, or gets the high scores if there is
+	var highScores = JSON.parse(localStorage.getItem('highScores') || '[]');
+
+	//Adds high score to array
 	highScores.push(highScore);
-	localStorage.setItem('High Scores', JSON.stringify(highScores));
+
+	//Sets array with new score added to local storage
+	localStorage.setItem('highScores', JSON.stringify(highScores));
+}
+
+//function to submit user score and initials
+function submitScore() {
+	addScore();
+	//Returns to start screen upon score submission
 	resetGame();
+}
+
+function startScreen() {
+	highscoreArea.style.display = 'none';
+	startArea.style.display = 'block';
+}
+function viewScores() {
+	startArea.style.display = 'none';
+	highscoreArea.style.display = 'block';
+	var currentScores = JSON.parse(localStorage.getItem('highScores'));
+	var scoreList = document.querySelector('.score-list');
+	currentScores.sort((a, b) => b.scoreValue - a.scoreValue);
+	for (i = 0; i < currentScores.length; i++) {
+		scoreList.children[i].textContent = `${currentScores[i].initials} --- Score: ${currentScores[i].scoreValue}`;
+	}
+	return currentScores;
 }
 
 //Starts game when user clicks start button
 startButton.addEventListener('click', startGame);
 submitButton.addEventListener('click', submitScore);
+highScoreButton.addEventListener('click', viewScores);
+returnButton.addEventListener('click', startScreen);
