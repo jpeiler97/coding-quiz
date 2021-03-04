@@ -27,19 +27,69 @@ var gameOver = false;
 //Array of objects representing questions and their answers
 var questions = [
 	{
-		question: 'What is 2+2?',
-		possibleAnswers: [ '1', '5', '6', '4' ],
-		answer: '4'
+		question: 'What does JSON stand for?',
+		possibleAnswers: [
+			'JavaScript Object Notation',
+			'JQuery Selector Object Node',
+			'Jason Says Oh No!',
+			'Javascript Status: Object Null'
+		],
+		answer: 'JavaScript Object Notation'
 	},
 	{
-		question: 'What is the first letter?',
-		possibleAnswers: [ 'A', 'C', 'Z', 'R' ],
-		answer: 'A'
+		question: 'Which snippet of code would you use to define a variable as the first array element?',
+		possibleAnswers: [ 'array{element: 1};', 'array = index[1];', 'var el = array[1];', 'var el = array[0];' ],
+		answer: 'var el = array[0];'
 	},
 	{
-		question: 'What is my name?',
-		possibleAnswers: [ 'JJ', 'JP', 'Bart', 'Zeus' ],
-		answer: 'JP'
+		question: 'What does the Javascript keyword "this." mean?',
+		possibleAnswers: [
+			'It returns a random variable from the document.',
+			'It accesses the method being used following the period.',
+			'It refers to its parent object.',
+			'It is not applicable to Javascript.'
+		],
+		answer: 'It refers to its parent object.'
+	},
+	{
+		question: 'What is meant by the content between parentheses in a function declaration?',
+		possibleAnswers: [
+			'They represent a parameter to be used when the function is called.',
+			'They are notes for developers for what goes inside the code.',
+			'They represent a return value.',
+			'They are defining a global variable.'
+		],
+		answer: 'They represent a parameter to be used when the function is called.'
+	},
+	{
+		question: '',
+		possibleAnswers: [ '', '', '', '' ],
+		answer: ''
+	},
+	{
+		question: '',
+		possibleAnswers: [ '', '', '', '' ],
+		answer: ''
+	},
+	{
+		question: '',
+		possibleAnswers: [ '', '', '', '' ],
+		answer: ''
+	},
+	{
+		question: '',
+		possibleAnswers: [ '', '', '', '' ],
+		answer: ''
+	},
+	{
+		question: '',
+		possibleAnswers: [ '', '', '', '' ],
+		answer: ''
+	},
+	{
+		question: '',
+		possibleAnswers: [ '', '', '', '' ],
+		answer: ''
 	}
 ];
 
@@ -123,6 +173,7 @@ function setTime() {
 
 		//Ends game when timer reaches 0
 		if (seconds <= 0 || gameOver) {
+			endGame();
 			clearInterval(timeInterval);
 			seconds = 0;
 			timeText.textContent = seconds;
@@ -170,21 +221,30 @@ function submitScore() {
 	//Returns to start screen upon score submission
 	resetGame();
 }
-
+//Function to from the high score screen to the start screen
 function startScreen() {
 	highscoreArea.style.display = 'none';
 	startArea.style.display = 'block';
 }
+
+//Function to display scores in an ordered list
 function viewScores() {
 	startArea.style.display = 'none';
 	highscoreArea.style.display = 'block';
+
+	//Stores scores from local storage in a new variable currentScores
 	var currentScores = JSON.parse(localStorage.getItem('highScores'));
+
+	//defines HTML element for list of scores as variable
 	var scoreList = document.querySelector('.score-list');
+
+	//Sorts currentScores from highest score to lowest
 	currentScores.sort((a, b) => b.scoreValue - a.scoreValue);
+
+	//adds currentScores to scoreList
 	for (i = 0; i < currentScores.length; i++) {
 		scoreList.children[i].textContent = `${currentScores[i].initials} --- Score: ${currentScores[i].scoreValue}`;
 	}
-	return currentScores;
 }
 
 //Starts game when user clicks start button
