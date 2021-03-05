@@ -77,4 +77,9 @@ header {
 	float: right;
 }
 
-/*QUIZ OVER*/
+.highscore-area {
+	margin: 10px 33% 10px 33%;
+	padding: 10px;
+	background-color: #c2c2c2;
+	border-radius: 10px;
+}

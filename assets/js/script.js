@@ -16,12 +16,13 @@ var highscoreArea = document.querySelector('.highscore-area');
 var returnButton = document.querySelector('.return-button');
 
 //Number of seconds to complete quizw
-var seconds = 100;
+var seconds = 80;
 //Number question in index
 var questionIndex = 0;
 //Score variable
 var score = 0;
 
+//Game over state
 var gameOver = false;
 
 //Array of objects representing questions and their answers
@@ -62,34 +63,59 @@ var questions = [
 		answer: 'They represent a parameter to be used when the function is called.'
 	},
 	{
-		question: '',
-		possibleAnswers: [ '', '', '', '' ],
-		answer: ''
+		question: 'What is the difference between the === and == operators?',
+		possibleAnswers: [
+			'One compares booleans and the other compares numbers',
+			'They both do the exact same thing.',
+			'One compares both value and type, and the other compares value only',
+			'One is compatible with IE7, the other is not.'
+		],
+		answer: 'One compares both value and type, and the other compares value only'
 	},
 	{
-		question: '',
-		possibleAnswers: [ '', '', '', '' ],
-		answer: ''
+		question: 'What specification does Javascript conform to?',
+		possibleAnswers: [ 'ECMAScript', 'HTML', 'Chromium', 'None of the Above' ],
+		answer: 'ECMAScript'
 	},
 	{
-		question: '',
-		possibleAnswers: [ '', '', '', '' ],
-		answer: ''
+		question: 'Which is the correct syntax for a for loop?',
+		possibleAnswers: [
+			'(for i = 0, i = array.length, i++);',
+			'for i = 0, (i < array.length; i++);',
+			'for (i = 0; i < array.length; i++);',
+			'for{ i < array.length; i++};'
+		],
+		answer: 'for (i = 0; i < array.length; i++);'
 	},
 	{
-		question: '',
-		possibleAnswers: [ '', '', '', '' ],
-		answer: ''
+		question: 'Which is the correct way to define an object?',
+		possibleAnswers: [
+			'var object = {element1: 1, element2: 2};',
+			'var object(element1, element2) = 1, 2;',
+			'object exampleObject = {element1: 1, element2: 2};',
+			'var object = [element1: 1, element2: 2];'
+		],
+		answer: 'var object = {element1: 1, element2: 2};'
 	},
 	{
-		question: '',
-		possibleAnswers: [ '', '', '', '' ],
-		answer: ''
+		question: 'How do you structure an if/else statement?',
+		possibleAnswers: [
+			'if apples === oranges, (doThing()), else (doNothing());',
+			'if (apples !== oranges), (doThing()) or else (doNothing());',
+			'if (apples !== oranges) { doThing(); } else { doNothing(); };',
+			'if (apples !== oranges) = doThing() else doNothing();'
+		],
+		answer: 'if (apples !== oranges) { doThing(); } else { doNothing(); };'
 	},
 	{
-		question: '',
-		possibleAnswers: [ '', '', '', '' ],
-		answer: ''
+		question: 'How do you link Javascript into an HTML file?',
+		possibleAnswers: [
+			'<script src= ".../script.js"></script>',
+			'<link href= ".../script.js">',
+			'<js src= "script.js"><js>',
+			'The browser will automatically link it, no worries.'
+		],
+		answer: '<script src= ".../script.js"></script>'
 	}
 ];
 
@@ -191,7 +217,7 @@ function resetGame() {
 	//Resets questionIndex and score for replay
 	questionIndex = 0;
 	score = 0;
-	seconds = 100;
+	seconds = 80;
 }
 
 function addScore() {
@@ -224,6 +250,7 @@ function submitScore() {
 //Function to from the high score screen to the start screen
 function startScreen() {
 	highscoreArea.style.display = 'none';
+	highScoreButton.style.display = 'block';
 	startArea.style.display = 'block';
 }
 
@@ -231,6 +258,7 @@ function startScreen() {
 function viewScores() {
 	startArea.style.display = 'none';
 	highscoreArea.style.display = 'block';
+	highScoreButton.style.display = 'none';
 
 	//Stores scores from local storage in a new variable currentScores
 	var currentScores = JSON.parse(localStorage.getItem('highScores'));
@@ -247,7 +275,7 @@ function viewScores() {
 	}
 }
 
-//Starts game when user clicks start button
+//Button event listeners
 startButton.addEventListener('click', startGame);
 submitButton.addEventListener('click', submitScore);
 highScoreButton.addEventListener('click', viewScores);
