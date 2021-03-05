@@ -71,7 +71,10 @@ header {
 .answer {
 	margin: 20px;
 	width: auto;
+	padding: 10px;
+	font-size: 15px;
 }
+
 .correct-status {
 	font-size: 20px;
 	float: right;
